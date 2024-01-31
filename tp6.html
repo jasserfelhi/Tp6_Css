@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>les règles de priorité</title>
+<style type="text/css">
+
+
+</style>
+<link rel="stylesheet" href="main.css">
+</head>
+<body>
+    <header>
+        <h1>Les règles de priorité en cas de conflit de valeurs</h1>
+        <img src="priorite.webp" >
+    </header>
+
+<h2>La cascade</h2>
+<p>Le terme de <a class="external" id="external"
+href="http://www.yoyodesign.org/doc/w3c/css2/cascade.html#cascade"
+target="_blank" rel="noopener">cascade</a> apparaît dans le nom du langage css. 
+C'est une notion
+importante pour comprendre quelle valeur va être appliquée lorsqu'il y a conflit, 
+qu'elle est
+définie plusieurs fois.</p>
+<p>Les style css sont définis à plusieurs niveaux, dans l'ordre, du moins au plus 
+prioritaire:</p>
+<ul id="menu">
+<li id="haut_menu">style par défaut du navigateur</li>
+<li>feuille de style intégrée ou styles insérés dans le &lt;head&gt; de la page,
+à l'aide de la balise &lt;style&gt;</li>
+<li>styles en ligne, à l'aide de l'attribut style d'un élément</li>
+<li id="bas_menu">styles définis par l'utilisateur final, par le biais de son navigateur</li>
+</ul>
+<p>les déclaration des feuilles de style intégrée ou styles insérés dans le
+&lt;head&gt; écraseront les styles du navigateur. Si plusieurs déclarations se 
+contredisent dans
+les fichiers css ou le head le style déclaré en dernier dans la page html 
+l'emportera. Les
+feuilles de styles seront elles-m êmes écrasées par d'éventuelles nouvelles valeurs
+décrites "en ligne", dans les éléments html. Enfin, l'utilisateur peut écraser
+n'importe quelle valeur à l'aide de ses propres réglages.</p>
+<p><strong>agent utilisateur &lt; l'auteur &lt; utilisateur</strong></p>
+<p style="text-align:center">Il y a cependant 2 points à prendre en compte, qui peuvent 
+perturber l'ordre de
+cascade:</p>
+<h2>La spécificité du sélecteur</h2>
+<p>La règle de cascade n'est appliquée qu'à <a class="external"
+    href="http://www.w3.org/TR/selectors/#specificity"
+    target="_blank" rel="noopener">spécificité</a> égale
+    des sélecteurs. Un sélecteur
+    est construit à l'aide de noms d'élément, de classe, d'ID, de pseudo-classes,... 
+    Certains
+    sélecteurs ont plus de poids que d'autre et donc, ils surpasseront des déclarations 
+    de moindre
+    poids.</p>
+    <p><strong>Pour déterminer la spécificité:</strong></p>
+    <ul>
+    <li>On compte le nombre d'ID =&gt; priorité au nombre le plus élevé</li>
+    <li>On compte le nombre de classes et pseudo-classes =&gt; priorité au nombre le 
+    plus élevé
+    </li>
+    <li>On compte le nombre d'éléments et pseudo-éléments =&gt; priorité au
+    nombre le plus élevé</li>
+    <li>On ignore le sélecteur universel (*)</li>
+    </ul>
+    <p>Exemple:</p>
+    <div class="code">#content nav li a.on:hover {<br /> color: red;<br />}</div>
+    <p>1 ID (#content), 2 classe+pseudo-classe (.on :hover), 3 éléments (nav li a)
+    =&gt; <strong>123</strong></p>
+    <p>Il surpassera ce sélecteur:</p>
+    <div class="code">nav.verte li.gras a.on:hover {<br /> color: green;<br />}</div>
+    <p>0 ID, 4 classe+pseudo-classe (.on :hover .verte .gras), 3 éléments (nav li a)
+    =&gt; <strong>33</strong></p>
+    <p>mais pas celui-ci:</p>
+    <div class="code">#content #nav a {<br /> color: red;<br />}</div>
+    <p>2 ID, 0 classe+pseudo-classe, 1 éléments (a) =&gt; <strong>200</strong></p>
+    <p><strong>Important:</strong> on peut augmenter la spécificité d'un sélecteur en
+    répétant, par exemple, un nom d'id:</p>
+    <div class="code">#content#content nav a {<br /> color: red;<br />}</div>
+    <p>Cela peut s'avérer utile lors de redéfinitions des style pour une version mobile, 
+    par exemple.</p>
+    <h2>La déclaration !important</h2>
+    <div>
+    <p>L'ajout d'un <strong class="primordiale">!important</strong>, entre la valeur et le ; permet de 
+    surpasser les règles de
+    cascade et de spécificité (pour autant qu'il n'y ait pas d'autres valeurs 
+    comportant un !important
+    auquel cas, on retrouve les règles de cascade et spécificités 
+    appliquées):</p></div>
+    <div class="code">#content nav a {<br /> color: red !important;<br />}</div>
+    <div class='code'><span style="color: #cc00cc;">#content</span> nav a <span
+    style="color: #66cc66;">&#123;</span><br /> <span style="color: #000000; fontweight: bold;">color</span>:
+    <span style="color: #993333;">red</span>
+    !important;<br />
+    <span style="color: #66cc66;">&#125;</span>
+    </div>
+    <footer>
+        <img src="priorite.webp">
+    </footer>
+    </body>
+    </html>
